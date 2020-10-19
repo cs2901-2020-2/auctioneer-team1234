@@ -29,7 +29,7 @@ public class Auctioneer implements Subject{
     public void registerBid (String name, Bidder bidder, double price) {
         if (bids.containsKey(name)) {
             if (bids.get(name).getBidder () == bidder) {
-
+                logger.info("You are already the latest bidder.");
                 return;
             }
             bids.get(name).updateBid(bidder, price);
