@@ -1,5 +1,5 @@
 package auctioneer;
 
 public interface Observer {
-    public void update (Object data);
+    void update (Object data);
 }
