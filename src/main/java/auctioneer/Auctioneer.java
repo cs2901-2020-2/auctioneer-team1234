@@ -5,15 +5,30 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Logger;
 
-public class Auctioneer implements Subject{
-    static private final Logger logger = Logger.getLogger(Auctioneer.class.getName());
-    private List<Observer> observers = new ArrayList<Observer>();
+public class Auctioneer implements Subject {
+    private List<Observer> observers = new ArrayList<>();
     private double price;
     private Bidder holder;
     protected boolean biddable = true;
+
+    public Auctioneer(double aPrice) {
+        updateHolder(null, aPrice);
+    }
+
+    public boolean isBiddable(){
+        return biddable;
+    }
+
+    public Bidder getHolder(){
+        return holder;
+    }
+
     @Override
     public void registerObserver(Observer obs) {
-        observers.add(obs);
+        if (obs != null){
+            observers.add(obs);
+            obs.update(price);
+        }
     }
 
     @Override
@@ -27,11 +42,20 @@ public class Auctioneer implements Subject{
             obs.update (price);
         }
     }
-    public void updateHolder (Bidder newHolder) { holder = newHolder;}
-    public Bidder getHolder () { return holder; }
-    public void updatePrice (double newPrice) {
-        price = newPrice;
-        biddable = true;
-        notifyObservers();
+
+    public boolean updateHolder (Bidder newHolder,double newPrice) {
+        if (observers.contains(newHolder) || newHolder == null){
+            holder = newHolder;
+            price = newPrice;
+            biddable = true;
+            notifyObservers();
+            return true;
+        }else return false;
     }
+
+    public void closeAuction(){
+        biddable = false;
+    }
+
+
 }
