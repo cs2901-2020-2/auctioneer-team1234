@@ -1,9 +1,7 @@
 package auctioneer;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.logging.Logger;
 
 public class Auctioneer implements Subject {
     private List<Observer> observers = new ArrayList<>();
